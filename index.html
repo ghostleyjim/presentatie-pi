@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="nl" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>ppt upload</title>
+</head>
+
+<body>
+
+
+
+<p>Selecteer PPS bestand en klik op upload</p>
+<p>Staat de presentatie op tijd en op herhalen in powerpoint?</p>
+<p>uitleg staat hier: <a href="/uitleg.html">klik hier!</a></p>
+<form action="fileupload.php" enctype="multipart/form-data" method="post">
+	<input id="fileToUpload" name="fileToUpload" type="file" />
+	<br />
+	<input name="bevestigen" type="submit" value="upload" />
+	<br /> <br />
+	</form>
+<form action=''>
+	<input name="aan" type="button" value="scherm aan" onclick="scherm('1')"/>
+	<input name="uit" type="button" value="scherm uit" onclick="scherm('0')"/>
+</form>
+
+<svg width="40" height="40">
+  <circle cx="20" cy="20" r="10" stroke="black" stroke-width="2" fill="" id="statusdot"/>
+</svg>
+<p>tv aan/uit: <b id="statustekst">onbekend</b></p>
+
+<script>
+	var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        statusdot.style.fill = this.responseText;
+		if(this.responseText == "green"){
+			document.getElementById("statustekst").innerHTML = "aan";
+			aanuit = "aan"; 
+		}
+		if (this.responseText == "red"){
+			document.getElementById("statustekst").innerHTML = "uit";
+			aanuit = "uit";
+		}
+	  }
+	  };
+	  xmlhttp.open("get", "screen.php?s=status" , true);
+	  xmlhttp.send();
+	  
+
+function scherm(status){
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        statusdot.style.fill = this.responseText;
+		if(this.responseText == "green"){
+			document.getElementById("statustekst").innerHTML = "aan";
+			aanuit = "aan"; 
+		}
+		if (this.responseText == "red"){
+			document.getElementById("statustekst").innerHTML = "uit";
+			aanuit = "uit";
+		}
+	  }
+	  };
+	  xmlhttp.open("get", "screen.php?s=" + status, true);
+	  xmlhttp.send();
+	}
+
+</script>
+</body>
+
+</html>
